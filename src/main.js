@@ -23,17 +23,20 @@ io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado!");
 
   // carga inicial de productos
-  const productos = productosApi.listarAll();
-
   socket.on("new-product", (producto) => {
     productosApi.guardar(producto);
     io.sockets.emit("productos", productosApi.listarAll());
   });
   // actualizacion de productos
+  socket.emit("productos", productosApi.listarAll());
 
   // carga inicial de mensajes
-
+  socket.on("new-message", (message) => {
+    mensajesApi.guardar(message);
+    io.sockets.emit("messages", mensajesApi.listarAll());
+  });
   // actualizacion de mensajes
+  socket.emit("messages", mensajesApi.listarAll());
 });
 
 //--------------------------------------------

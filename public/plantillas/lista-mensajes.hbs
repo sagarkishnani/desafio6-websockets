@@ -1,0 +1,9 @@
+{{#if messages.length}}
+  <h2>Lista de Mensajes</h2>
+  {{#each messages}}
+    <ul>
+      <li>{{this.username}}</li>
+      <li>{{this.message}}</li>
+    </ul>
+  {{/each}}
+{{/if}}
