@@ -36,7 +36,7 @@ io.on("connection", async (socket) => {
     io.sockets.emit("messages", mensajesApi.listarAll());
   });
   // actualizacion de mensajes
-  socket.emit("messages", mensajesApi.listarAll());
+  socket.emit("messages", await mensajesApi.listarAll());
 });
 
 //--------------------------------------------
@@ -45,7 +45,6 @@ io.on("connection", async (socket) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
 //--------------------------------------------
 // inicio el servidor
 

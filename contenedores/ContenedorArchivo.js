@@ -17,7 +17,7 @@ class ContenedorArchivo {
 
   async listarAll() {
     try {
-      let messages = await fs.promises.readFile(`${this.ruta}`, "utf-8");
+      let messages = await fs.readFile(`${this.ruta}`, "utf-8");
       return JSON.parse(messages);
     } catch (err) {
       console.log(`Error al leer los mensajes: ${err}`);
@@ -25,19 +25,19 @@ class ContenedorArchivo {
     }
   }
 
-  async guardar({ username, message }) {
+  async guardar({ username, message, fyh }) {
     try {
-      let resultado = await this.getAll();
+      let resultado = await this.listarAll();
 
       let ids = 1;
       if (resultado.length > 0) {
         ids = resultado[resultado.length - 1].id + 1;
       }
 
-      resultado.push({ username, message, id: ids });
+      resultado.push({ username, message, fyh, id: ids });
 
-      await fs.promises.writeFile(`${this.ruta}`, JSON.stringify(resultado));
-      return ids;
+      await fs.writeFile(`${this.ruta}`, JSON.stringify(resultado));
+      return console.log(resultado);
     } catch (err) {
       console.log(`Error al guardar el Item: ${err}`);
     }

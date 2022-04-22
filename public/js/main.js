@@ -19,7 +19,6 @@ socket.on("productos", (productos) => {
   makeHtmlTable(productos).then((html) => {
     document.getElementById("productos").innerHTML = html;
   });
-  console.log(productos);
 });
 
 function makeHtmlTable(productos) {
@@ -35,26 +34,31 @@ function makeHtmlTable(productos) {
 //-------------------------------------------------------------------------------------
 
 const inputUsername = document.getElementById("inputUsername");
-const inputMensaje = document.getElementById("inputMensaje");
+const inputMessage = document.getElementById("inputMensaje");
 const btnEnviar = document.getElementById("btnEnviar");
 
 const formPublicarMensaje = document.getElementById("formPublicarMensaje");
+
+const hoy = new Date();
+
 formPublicarMensaje.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const message = {
-    username: inputUsername.value,
-    message: inputMensaje.value,
-  };
-  socket.emit("new-mesage", message);
-  return false;
+  if (inputUsername.value.length !== 0) {
+    const message = {
+      username: inputUsername.value,
+      message: inputMessage.value,
+      fyh: hoy.toUTCString(),
+    };
+    socket.emit("new-message", message);
+    return false;
+  } else alert("Debes ingresar tu email para poder chatear");
 });
 
 socket.on("messages", (messages) => {
   makeHtmlList(messages).then((html) => {
     document.getElementById("messages").innerHTML = html;
   });
-  console.log(messages);
 });
 
 function makeHtmlList(messages) {
